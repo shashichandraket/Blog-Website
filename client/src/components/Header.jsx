@@ -1,4 +1,13 @@
-import { Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem,
+  Navbar,
+  TextInput,
+} from "flowbite-react";
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
@@ -35,7 +44,25 @@ export default function Header() {
           <FaMoon />
         </Button>
         {currentUser ? (
-          <Dropdown></Dropdown>
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
+          >
+            <DropdownHeader>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">
+                @{currentUser.email}
+              </span>
+            </DropdownHeader>
+            <Link to={"/dashboard?tab=profile"}>
+              <DropdownItem>Profile</DropdownItem>
+            </Link>
+            <DropdownDivider />
+            <DropdownItem>Sign out</DropdownItem>
+          </Dropdown>
         ) : (
           <Link to="/sign-in">
             <Button gradientDuoTone="purpleToBlue" outline>
