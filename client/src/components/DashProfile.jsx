@@ -9,11 +9,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useSelector } from "react-redux";
-import {
-  updateFailure,
-  updateStart,
-  updateSuccess,
-} from "../redux/user/userSlice";
 import { app } from "./../firebase";
 
 export default function DashProfile() {
@@ -65,34 +60,34 @@ export default function DashProfile() {
       }
     );
   };
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.id]: e.target.value });
+  // };
 
-  const handleSubmit = async (e) => {
-    e.prevantDefault();
-    if (Object.keys(formData).length === 0) {
-      return;
-    }
-    try {
-      dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        dispatch(updateFailure(data.message));
-      } else {
-        dispatch(updateSuccess(data));
-      }
-    } catch (error) {
-      dispatch(updateFailure(error.message));
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.prevantDefault();
+  //   if (Object.keys(formData).length === 0) {
+  //     return;
+  //   }
+  //   try {
+  //     dispatch(updateStart());
+  //     const res = await fetch(`/api/user/update/${currentUser._id}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(formData),
+  //     });
+  //     const data = await res.json();
+  //     if (!res.ok) {
+  //       dispatch(updateFailure(data.message));
+  //     } else {
+  //       dispatch(updateSuccess(data));
+  //     }
+  //   } catch (error) {
+  //     dispatch(updateFailure(error.message));
+  //   }
+  // };
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -146,21 +141,15 @@ export default function DashProfile() {
           id="username"
           placeholder="username"
           defaultValue={currentUser.username}
-          onChange={handleChange}
+          // onChange={handleChange}
         />
         <TextInput
           type="email"
           id="email"
           placeholder="email"
           defaultValue={currentUser.email}
-          onChange={handleChange}
         />
-        <TextInput
-          type="password"
-          id="password"
-          placeholder="password"
-          onChange={handleChange}
-        />
+        <TextInput type="password" id="password" placeholder="password" />
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update
         </Button>
